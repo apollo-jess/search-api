@@ -1,5 +1,7 @@
 package practice.searchapi.entity;
 
+import practice.searchapi.util.PlaceComparator;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,11 +9,9 @@ import java.util.Objects;
 
 public class Places {
 
-    private final List<Place> places;
+    private static final int NOT_FOUND = -1;
 
-    public Places() {
-        this.places = new ArrayList<>();
-    }
+    private final List<Place> places;
 
     public Places(List<Place> places) {
         this.places = places;
@@ -20,23 +20,43 @@ public class Places {
     public Places(Places placesByKakao, Places placesByNaver) {
         this.places = new ArrayList<>(placesByKakao.getPlaces());
         merge(placesByNaver);
+        sort();
     }
 
     public void merge(Places places) {
-        for (Place target : places.getPlaces()) {
-            if (!containing(target)) {
-                add(target);
+        for (Place place : places.getPlaces()) {
+            if (containing(place)) {
+                changePlacePriorityIfDuplicated(place);
+                continue;
             }
+            this.places.add(place);
         }
     }
 
-    private void add(Place place) {
-        this.places.add(place);
+    private void changePlacePriorityIfDuplicated(Place place) {
+        int index = getDuplicatedPlaceIndexWith(place);
+        if (index != NOT_FOUND) {
+            this.places.add(new Place(this.places.get(index), true));
+            this.places.remove(index);
+        }
     }
 
-    private boolean containing(Place target) {
+    private boolean containing(Place place) {
         return this.places.stream()
-                .anyMatch(place -> place.isEqual(target));
+                .anyMatch(p -> p.isEqual(place));
+    }
+
+    private int getDuplicatedPlaceIndexWith(Place target) {
+        for (int i = 0; i < this.places.size(); i++) {
+            if (this.places.get(i).isEqual(target)) {
+                return i;
+            }
+        }
+        return NOT_FOUND;
+    }
+
+    private void sort() {
+        this.places.sort(new PlaceComparator());
     }
 
     public List<Place> getPlaces() {
