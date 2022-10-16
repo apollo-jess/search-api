@@ -4,24 +4,23 @@ import java.util.Objects;
 
 public class Place {
 
-    private final String name;
+    private final Name name;
 
     private final String address;
 
     private final Location location;
 
     public Place(String name, String address, String x, String y) {
-        this.name = name;
+        this.name = new Name(name);
         this.address = address;
         this.location = new Location(x, y);
     }
 
     public boolean compare(Place target) {
-        return this.name.replaceAll("[\\s+]", "")
-                .equals(target.getName().replaceAll("[\\s+]", ""));
+        return this.name.equals(target.getName());
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
