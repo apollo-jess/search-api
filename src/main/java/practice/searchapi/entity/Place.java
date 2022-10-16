@@ -1,8 +1,6 @@
 package practice.searchapi.entity;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Place {
 
@@ -12,10 +10,20 @@ public class Place {
 
     private final Location location;
 
-    public Place(String name, String roadAddress, String x, String y) {
+    private final Priority priority;
+
+    public Place(String name, String roadAddress, String x, String y, API API) {
         this.name = new Name(name);
         this.roadAddress = roadAddress;
         this.location = new Location(x, y);
+        this.priority = new Priority(API);
+    }
+
+    public Place(Place place, boolean duplicated) {
+        this.name = new Name(place.getName());
+        this.roadAddress = place.getRoadAddress();
+        this.location = new Location(place.getLocation());
+        this.priority = new Priority(place.getPriority(), duplicated);
     }
 
     public boolean isEqual(Place target) {
@@ -26,16 +34,25 @@ public class Place {
         return name;
     }
 
+    public String getRoadAddress() {
+        return roadAddress;
+    }
+
     public Location getLocation() {
         return location;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     @Override
     public String toString() {
         return "Place{" +
-                "title='" + name + '\'' +
-                ", address='" + roadAddress + '\'' +
+                "name=" + name +
+                ", roadAddress='" + roadAddress + '\'' +
                 ", location=" + location +
+                ", priority=" + priority +
                 '}';
     }
 
