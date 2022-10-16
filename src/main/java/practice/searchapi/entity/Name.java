@@ -10,10 +10,18 @@ public class Name {
         this.name = validate(name);
     }
 
+    public Name(Name name) {
+        this(name.getName());
+    }
+
     private String validate(String name) {
         return name
                 .replaceAll("[\\s+]", "")
                 .replaceAll("[<b|(/b)>]", "");
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

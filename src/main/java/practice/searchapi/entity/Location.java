@@ -13,6 +13,18 @@ public class Location {
         this.y = y;
     }
 
+    public Location(Location location) {
+        this(location.getX(), location.getY());
+    }
+
+    public String getX() {
+        return x;
+    }
+
+    public String getY() {
+        return y;
+    }
+
     @Override
     public String toString() {
         return "Location{" +
