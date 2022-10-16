@@ -9,26 +9,34 @@ public class Places {
 
     private final List<Place> places;
 
+    public Places() {
+        this.places = new ArrayList<>();
+    }
+
     public Places(List<Place> places) {
         this.places = places;
     }
 
     public Places(Places placesByKakao, Places placesByNaver) {
-        this.places = merge(placesByKakao, placesByNaver);
+        this.places = new ArrayList<>(placesByKakao.getPlaces());
+        merge(placesByNaver);
     }
 
-    public List<Place> merge(Places places1, Places places2) {
-
-        List<Place> places = new ArrayList<>(places1.getPlaces());
-        for (Place place : places) {
-            for (Place target : places2.getPlaces()) {
-                if (!place.isEqual(target)) {
-                    places.add(target);
-                }
+    public void merge(Places places) {
+        for (Place target : places.getPlaces()) {
+            if (!containing(target)) {
+                add(target);
             }
         }
+    }
 
-        return places;
+    private void add(Place place) {
+        this.places.add(place);
+    }
+
+    private boolean containing(Place target) {
+        return this.places.stream()
+                .anyMatch(place -> place.isEqual(target));
     }
 
     public List<Place> getPlaces() {
