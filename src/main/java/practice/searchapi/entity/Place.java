@@ -16,7 +16,7 @@ public class Place {
         this.location = new Location(x, y);
     }
 
-    public boolean compare(Place target) {
+    public boolean isEqual(Place target) {
         return this.name.equals(target.getName());
     }
 

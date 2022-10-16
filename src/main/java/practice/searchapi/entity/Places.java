@@ -22,7 +22,7 @@ public class Places {
         List<Place> places = new ArrayList<>(places1.getPlaces());
         for (Place place : places) {
             for (Place target : places2.getPlaces()) {
-                if (!place.compare(target)) {
+                if (!place.isEqual(target)) {
                     places.add(target);
                 }
             }

@@ -1,6 +1,5 @@
 package practice.searchapi.entity;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,8 +21,8 @@ class PlaceTest {
         Place place_space = new Place("<b>카카오프렌즈</b> 스타필드 <b>코엑스</b>몰점", "서울 강남구 삼성동 159", "127.059028716089", "37.5120756277877");
 
         assertAll("동일한 장소 판단 케이스 확인",
-                () -> assertThat(place.compare(place_equal)).isTrue(),
-                () -> assertThat(place.compare(place_space)).isTrue()
+                () -> assertThat(place.isEqual(place_equal)).isTrue(),
+                () -> assertThat(place.isEqual(place_space)).isTrue()
         );
 
     }
