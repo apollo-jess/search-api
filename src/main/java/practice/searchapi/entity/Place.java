@@ -6,13 +6,13 @@ public class Place {
 
     private final Name name;
 
-    private final String address;
+    private final String roadAddress;
 
     private final Location location;
 
-    public Place(String name, String address, String x, String y) {
+    public Place(String name, String roadAddress, String x, String y) {
         this.name = new Name(name);
-        this.address = address;
+        this.roadAddress = roadAddress;
         this.location = new Location(x, y);
     }
 
@@ -32,7 +32,7 @@ public class Place {
     public String toString() {
         return "Place{" +
                 "title='" + name + '\'' +
-                ", address='" + address + '\'' +
+                ", address='" + roadAddress + '\'' +
                 ", location=" + location +
                 '}';
     }
@@ -42,11 +42,11 @@ public class Place {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Place place = (Place) o;
-        return Objects.equals(name, place.name) && Objects.equals(address, place.address) && Objects.equals(location, place.location);
+        return Objects.equals(name, place.name) && Objects.equals(roadAddress, place.roadAddress) && Objects.equals(location, place.location);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, address, location);
+        return Objects.hash(name, roadAddress, location);
     }
 }
