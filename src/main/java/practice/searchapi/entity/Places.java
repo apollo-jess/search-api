@@ -18,10 +18,15 @@ public class Places {
     }
 
     public List<Place> merge(Places places1, Places places2) {
-        List<Place> places = new ArrayList<>();
 
-        places.addAll(places1.getPlaces());
-        places.addAll(places2.getPlaces());
+        List<Place> places = new ArrayList<>(places1.getPlaces());
+        for (Place place : places) {
+            for (Place target : places2.getPlaces()) {
+                if (!place.compare(target)) {
+                    places.add(target);
+                }
+            }
+        }
 
         return places;
     }

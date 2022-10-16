@@ -20,4 +20,14 @@ public class PlacesTest {
 
         assertThat(places).isEqualTo(new Places(Arrays.asList(카카오프렌즈_코엑스점, 카카오프렌즈_서울역점)));
     }
+
+    @Test
+    void 같은_장소_Merge_테스트() {
+        Places placesByKakao = new Places(Arrays.asList(카카오프렌즈_코엑스점));
+        Places placesByNaver = new Places(Arrays.asList(카카오프렌즈_코엑스점));
+
+        Places places = new Places(placesByKakao, placesByNaver);
+
+        assertThat(places).isEqualTo(new Places(Arrays.asList(카카오프렌즈_코엑스점)));
+    }
 }
