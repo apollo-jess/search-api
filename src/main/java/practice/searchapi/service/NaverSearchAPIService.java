@@ -18,7 +18,7 @@ public class NaverSearchAPIService {
 
     private static final int SEARCH_LIMIT_COUNT = 5;
 
-    public void search(String query) {
+    public NaverSearchResponseDTO search(String query) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://openapi.naver.com")
@@ -31,10 +31,10 @@ public class NaverSearchAPIService {
 
         try {
             Response<NaverSearchResponseDTO> response = callSync.execute();
-            NaverSearchResponseDTO naverSearchResponseDTO = response.body();
-            System.out.println(naverSearchResponseDTO.toString());
+            return response.body();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return NaverSearchResponseDTO.builder().total(0).build();
         }
     }
 }

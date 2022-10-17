@@ -1,8 +1,11 @@
 package practice.searchapi.service.dto;
 
+import lombok.Getter;
+
+@Getter
 public class NaverSearchResponseItemDTO {
 
-    private String item;
+    private String title;
 
     private String link;
 
@@ -23,7 +26,7 @@ public class NaverSearchResponseItemDTO {
     @Override
     public String toString() {
         return "NaverSearchResponseItemDTO{" +
-                "item='" + item + '\'' +
+                "item='" + title + '\'' +
                 ", link='" + link + '\'' +
                 ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
