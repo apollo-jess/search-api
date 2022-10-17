@@ -1,5 +1,10 @@
 package practice.searchapi.entity;
 
+import practice.searchapi.service.dto.KakaoSearchResponseDTO;
+import practice.searchapi.service.dto.KakaoSearchResponseDocumentsDTO;
+import practice.searchapi.service.dto.NaverSearchResponseDTO;
+import practice.searchapi.service.dto.NaverSearchResponseItemDTO;
+import practice.searchapi.service.dto.PlaceDTO;
 import practice.searchapi.util.PlaceComparator;
 
 import java.util.ArrayList;
@@ -21,6 +26,22 @@ public class Places {
         this.places = new ArrayList<>(placesByKakao.getPlaces());
         merge(placesByNaver);
         sort();
+    }
+
+    public Places(NaverSearchResponseDTO dto) {
+        this.places = new ArrayList<>();
+        for (NaverSearchResponseItemDTO item : dto.getItems()) {
+            Place place = new Place(item.getTitle(), item.getRoadAddress(), item.getMapx(), item.getMapy(), API.NAVER);
+            this.places.add(place);
+        }
+    }
+
+    public Places(KakaoSearchResponseDTO dto) {
+        this.places = new ArrayList<>();
+        for (KakaoSearchResponseDocumentsDTO document : dto.getDocuments()) {
+            Place place = new Place(document.getPlace_name(), document.getRoad_address_name(), document.getX(), document.getY(), API.KAKAO);
+            this.places.add(place);
+        }
     }
 
     public void merge(Places places) {
@@ -81,5 +102,16 @@ public class Places {
     @Override
     public int hashCode() {
         return Objects.hash(places);
+    }
+
+    public List<PlaceDTO> toResponseDto() {
+        List<PlaceDTO> placeDTOs = new ArrayList<PlaceDTO>();
+
+        for (Place place : this.places) {
+            PlaceDTO placeDto = place.toDto();
+            placeDTOs.add(placeDto);
+        }
+
+        return placeDTOs;
     }
 }

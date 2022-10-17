@@ -1,5 +1,7 @@
 package practice.searchapi.entity;
 
+import practice.searchapi.service.dto.PlaceDTO;
+
 import java.util.Objects;
 
 public class Place {
@@ -13,6 +15,13 @@ public class Place {
     private final Priority priority;
 
     public Place(String name, String roadAddress, String x, String y, API API) {
+        this.name = new Name(name);
+        this.roadAddress = roadAddress;
+        this.location = new Location(x, y);
+        this.priority = new Priority(API);
+    }
+
+    public Place(String name, String roadAddress, int x, int y, API API) {
         this.name = new Name(name);
         this.roadAddress = roadAddress;
         this.location = new Location(x, y);
@@ -67,5 +76,9 @@ public class Place {
     @Override
     public int hashCode() {
         return Objects.hash(name, roadAddress, location);
+    }
+
+    public PlaceDTO toDto() {
+        return new PlaceDTO(name.getName(), roadAddress, getLocation().getX(), getLocation().getY());
     }
 }
