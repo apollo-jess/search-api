@@ -1,5 +1,10 @@
 package practice.searchapi.service.dto;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder
+@Getter
 public class KakaoSearchResponseMetaDTO {
 
     private int totalCount;

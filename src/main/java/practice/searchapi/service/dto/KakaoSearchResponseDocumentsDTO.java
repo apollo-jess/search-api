@@ -1,5 +1,8 @@
 package practice.searchapi.service.dto;
 
+import lombok.Getter;
+
+@Getter
 public class KakaoSearchResponseDocumentsDTO {
 
     private String id;

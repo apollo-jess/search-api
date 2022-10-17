@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient;
 import org.springframework.stereotype.Service;
 import practice.searchapi.service.api.KakaoSearchAPI;
 import practice.searchapi.service.dto.KakaoSearchResponseDTO;
+import practice.searchapi.service.dto.KakaoSearchResponseMetaDTO;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -18,7 +19,7 @@ public class KakaoSearchAPIService {
 
     private static final int SEARCH_LIMIT_COUNT = 5;
 
-    public void search(String query) {
+    public KakaoSearchResponseDTO search(String query) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://dapi.kakao.com")
@@ -31,11 +32,12 @@ public class KakaoSearchAPIService {
 
         try {
             Response<KakaoSearchResponseDTO> response = callSync.execute();
-            KakaoSearchResponseDTO kakaoSearchResponseDTO = response.body();
-            System.out.println(kakaoSearchResponseDTO.toString());
-
+            return response.body();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return KakaoSearchResponseDTO.builder()
+                    .meta(KakaoSearchResponseMetaDTO.builder().totalCount(0).build())
+                    .build();
         }
     }
 
