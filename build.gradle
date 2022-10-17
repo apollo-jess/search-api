@@ -23,6 +23,8 @@ dependencies {
 
     // develop features
     implementation 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
