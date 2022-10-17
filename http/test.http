@@ -1,3 +1,3 @@
 
 ## get Test
-GET http://localhost:8080/v1/places?query=카카오
+GET http://localhost:8080/v1/places?query=카카오프렌즈
