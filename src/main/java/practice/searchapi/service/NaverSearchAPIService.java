@@ -16,6 +16,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class NaverSearchAPIService {
 
+    private static final int SEARCH_LIMIT_COUNT = 5;
+
     public void search(String query) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
@@ -25,14 +27,13 @@ public class NaverSearchAPIService {
                 .build();
 
         NaverSearchAPI naverSearchAPI = retrofit.create(NaverSearchAPI.class);
-        Call<NaverSearchResponseDTO> callSync = naverSearchAPI.getPlaces(query, 5);
+        Call<NaverSearchResponseDTO> callSync = naverSearchAPI.getPlaces(query, SEARCH_LIMIT_COUNT);
 
         try {
             Response<NaverSearchResponseDTO> response = callSync.execute();
             NaverSearchResponseDTO naverSearchResponseDTO = response.body();
             System.out.println(naverSearchResponseDTO.toString());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
