@@ -12,4 +12,12 @@ public enum API {
         this.type = type;
         this.order = order;
     }
+
+    public boolean isHigherThan(API api) {
+        return this.getOrder() < api.getOrder();
+    }
+
+    public int getOrder() {
+        return order;
+    }
 }
