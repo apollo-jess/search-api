@@ -26,6 +26,18 @@ public class Priority {
         return duplicated;
     }
 
+    public int isHigherPriorityThan(Priority another) {
+        if (this.duplicated && !another.isDuplicated()) {
+            return -1;
+        }
+
+        if (this.api.isHigherThan(another.getApi())) {
+            return -1;
+        }
+
+        return 0;
+    }
+
     @Override
     public String toString() {
         return "Priority{" +
