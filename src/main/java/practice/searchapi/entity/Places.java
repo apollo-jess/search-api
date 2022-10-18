@@ -26,9 +26,9 @@ public class Places {
         this.places = places;
     }
 
-    public Places(Places placesByKakao, Places placesByNaver) {
-        this.places = new ArrayList<>(placesByKakao.getPlaces());
-        merge(placesByNaver);
+    public Places(Places places1, Places places2) {
+        this.places = new ArrayList<>(places1.getPlaces());
+        mergePlaces(places2);
         sort();
     }
 
@@ -48,29 +48,37 @@ public class Places {
         }
     }
 
-    public void merge(Places places) {
+    public void mergePlaces(Places places) {
         for (Place place : places.getPlaces()) {
-            int index = getDuplicatedPlaceIndexWith(place);
-            if (index != NOT_FOUND) {
-                changePlacePriority(index, place);
-                continue;
-            }
-            this.places.add(place);
+            merge(place);
         }
     }
 
-    private void changePlacePriority(int index, Place place) {
+    private void merge(Place place) {
+        if (isDuplicated(place)) {
+            changeDuplicatedPlace(place);
+            return;
+        }
+        this.places.add(place);
+    }
+
+    private boolean isDuplicated(Place place) {
+        return this.places.stream()
+                .anyMatch(p -> p.isEqual(place));
+    }
+
+    private void changeDuplicatedPlace(Place place) {
+        int index = getDuplicatedPlaceIndexWith(place);
+        if (index == NOT_FOUND) {
+            return ;
+        }
+
         Place higherPriorityPlace
                 = this.places.get(index).isHigherPriorityPlaceThan(place)
                 ? this.places.get(index) : place;
 
         this.places.add(new Place(higherPriorityPlace, DUPLICATED));
         this.places.remove(index);
-    }
-
-    private boolean containing(Place place) {
-        return this.places.stream()
-                .anyMatch(p -> p.isEqual(place));
     }
 
     private int getDuplicatedPlaceIndexWith(Place target) {
