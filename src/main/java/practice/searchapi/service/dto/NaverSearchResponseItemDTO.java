@@ -11,8 +11,6 @@ public class NaverSearchResponseItemDTO {
 
     private String category;
 
-    private String description;
-
     private String telephone;
 
     private String address;
@@ -22,6 +20,8 @@ public class NaverSearchResponseItemDTO {
     private int mapx;
 
     private int mapy;
+
+    private String description;
 
     @Override
     public String toString() {

@@ -9,11 +9,9 @@ public class KakaoSearchResponseDocumentsDTO {
 
     private String place_name;
 
+    private String place_url;
+
     private String category_name;
-
-    private String category_group_code;
-
-    private String category_group_name;
 
     private String phone;
 
@@ -25,7 +23,9 @@ public class KakaoSearchResponseDocumentsDTO {
 
     private String y;
 
-    private String place_url;
+    private String category_group_code;
+
+    private String category_group_name;
 
     private String distance;
 
