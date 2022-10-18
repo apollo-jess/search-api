@@ -16,6 +16,8 @@ public class Places {
 
     private static final int NOT_FOUND = -1;
 
+    private static final PlaceComparator placeComparator = new PlaceComparator();
+
     private final List<Place> places;
 
     public Places(List<Place> places) {
@@ -77,7 +79,7 @@ public class Places {
     }
 
     private void sort() {
-        this.places.sort(new PlaceComparator());
+        this.places.sort(placeComparator);
     }
 
     public List<Place> getPlaces() {
