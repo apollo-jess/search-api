@@ -1,8 +1,7 @@
-package practice.searchapi.service;
+package practice.searchapi.service.search;
 
-import lombok.RequiredArgsConstructor;
 import okhttp3.OkHttpClient;
-import org.springframework.stereotype.Service;
+import practice.searchapi.entity.Places;
 import practice.searchapi.service.api.KakaoSearchAPI;
 import practice.searchapi.service.dto.KakaoSearchResponseDTO;
 import practice.searchapi.service.dto.KakaoSearchResponseMetaDTO;
@@ -13,13 +12,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 
-@Service
-@RequiredArgsConstructor
-public class KakaoSearchAPIService {
+public class KakaoAPI implements SearchAPI {
 
     private static final int SEARCH_LIMIT_COUNT = 5;
 
-    public KakaoSearchResponseDTO search(String query) {
+    @Override
+    public Places searchPlaces(String query) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://dapi.kakao.com")
@@ -32,13 +30,16 @@ public class KakaoSearchAPIService {
 
         try {
             Response<KakaoSearchResponseDTO> response = callSync.execute();
-            return response.body();
-        } catch (IOException e) {
+            if (response.body() == null) {
+                throw new Exception("검색 오류 발생");
+            }
+            return new Places(response.body());
+        } catch (Exception e) {
             e.printStackTrace();
-            return KakaoSearchResponseDTO.builder()
-                    .meta(KakaoSearchResponseMetaDTO.builder().totalCount(0).build())
-                    .build();
         }
-    }
 
+        return new Places(KakaoSearchResponseDTO.builder()
+                .meta(KakaoSearchResponseMetaDTO.builder().totalCount(0).build())
+                .build());
+    }
 }

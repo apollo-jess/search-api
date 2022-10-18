@@ -1,27 +1,29 @@
 package practice.searchapi.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import practice.searchapi.entity.Places;
 import practice.searchapi.service.dto.PlaceDTO;
+import practice.searchapi.service.search.SearchAPI;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class PlaceService {
 
-    private final NaverSearchAPIService naverSearchAPIService;
+    public PlaceService(List<SearchAPI> searchAPIs) {
+        this.searchAPIs = searchAPIs;
+    }
 
-    private final KakaoSearchAPIService kakaoSearchAPIService;
+    private final List<SearchAPI> searchAPIs;
 
     public List<PlaceDTO> getPlaces(String query) {
-        Places placesByNaverSearchAPI = new Places(naverSearchAPIService.search(query));
-        Places placesByKakaoSearchAPI = new Places(kakaoSearchAPIService.search(query));
+        List<Places> searchedPlaces = new ArrayList<>();
+        for (SearchAPI searchAPI : searchAPIs) {
+            searchedPlaces.add(searchAPI.searchPlaces(query));
+        }
 
-        Places places = new Places(Arrays.asList(placesByNaverSearchAPI, placesByKakaoSearchAPI), 2);
-
+        Places places = new Places(searchedPlaces, 2);
         return places.toResponseDto();
     }
 }
