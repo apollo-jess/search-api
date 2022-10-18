@@ -1,5 +1,7 @@
 package practice.searchapi.entity;
 
+import practice.searchapi.service.dto.KakaoSearchResponseDocumentsDTO;
+import practice.searchapi.service.dto.NaverSearchResponseItemDTO;
 import practice.searchapi.service.dto.PlaceDTO;
 
 import java.util.Objects;
@@ -21,18 +23,19 @@ public class Place {
         this.priority = new Priority(API);
     }
 
-    public Place(String name, String roadAddress, int x, int y, API API) {
-        this.name = new Name(name);
-        this.roadAddress = roadAddress;
-        this.location = new Location(x, y);
-        this.priority = new Priority(API);
-    }
-
     public Place(Place place, boolean duplicated) {
         this.name = new Name(place.getName());
         this.roadAddress = place.getRoadAddress();
         this.location = new Location(place.getLocation());
         this.priority = new Priority(place.getPriority(), duplicated);
+    }
+
+    public Place(KakaoSearchResponseDocumentsDTO document) {
+        this(document.getPlace_name(), document.getRoad_address_name(), document.getX(), document.getY(), API.KAKAO);
+    }
+
+    public Place(NaverSearchResponseItemDTO item) {
+        this(item.getTitle(), item.getRoadAddress(), String.valueOf(item.getMapx()), String.valueOf(item.getMapy()), API.NAVER);
     }
 
     public boolean isEqual(Place target) {

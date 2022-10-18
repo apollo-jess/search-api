@@ -13,11 +13,6 @@ public class Location {
         this.y = y;
     }
 
-    public Location(int x, int y) {
-        this.x = String.valueOf(x);
-        this.y = String.valueOf(y);
-    }
-
     public Location(Location location) {
         this(location.getX(), location.getY());
     }

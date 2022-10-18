@@ -35,7 +35,7 @@ public class Places {
     public Places(NaverSearchResponseDTO dto) {
         this.places = new ArrayList<>();
         for (NaverSearchResponseItemDTO item : dto.getItems()) {
-            Place place = new Place(item.getTitle(), item.getRoadAddress(), item.getMapx(), item.getMapy(), API.NAVER);
+            Place place = new Place(item);
             this.places.add(place);
         }
     }
@@ -43,7 +43,7 @@ public class Places {
     public Places(KakaoSearchResponseDTO dto) {
         this.places = new ArrayList<>();
         for (KakaoSearchResponseDocumentsDTO document : dto.getDocuments()) {
-            Place place = new Place(document.getPlace_name(), document.getRoad_address_name(), document.getX(), document.getY(), API.KAKAO);
+            Place place = new Place(document);
             this.places.add(place);
         }
     }
