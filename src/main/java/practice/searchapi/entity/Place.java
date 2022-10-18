@@ -39,6 +39,10 @@ public class Place {
         return this.name.equals(target.getName());
     }
 
+    public boolean isHigherPriorityPlaceThan(Place another) {
+        return this.priority.isHigherPriorityThan(another.getPriority());
+    }
+
     public Name getName() {
         return name;
     }

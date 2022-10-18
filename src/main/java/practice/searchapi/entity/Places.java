@@ -16,6 +16,8 @@ public class Places {
 
     private static final int NOT_FOUND = -1;
 
+    private static final boolean DUPLICATED = true;
+
     private static final PlaceComparator placeComparator = new PlaceComparator();
 
     private final List<Place> places;
@@ -48,20 +50,22 @@ public class Places {
 
     public void merge(Places places) {
         for (Place place : places.getPlaces()) {
-            if (containing(place)) {
-                changePlacePriorityIfDuplicated(place);
+            int index = getDuplicatedPlaceIndexWith(place);
+            if (index != NOT_FOUND) {
+                changePlacePriority(index, place);
                 continue;
             }
             this.places.add(place);
         }
     }
 
-    private void changePlacePriorityIfDuplicated(Place place) {
-        int index = getDuplicatedPlaceIndexWith(place);
-        if (index != NOT_FOUND) {
-            this.places.add(new Place(this.places.get(index), true));
-            this.places.remove(index);
-        }
+    private void changePlacePriority(int index, Place place) {
+        Place higherPriorityPlace
+                = this.places.get(index).isHigherPriorityPlaceThan(place)
+                ? this.places.get(index) : place;
+
+        this.places.add(new Place(higherPriorityPlace, DUPLICATED));
+        this.places.remove(index);
     }
 
     private boolean containing(Place place) {

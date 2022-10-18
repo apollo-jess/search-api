@@ -26,16 +26,12 @@ public class Priority {
         return duplicated;
     }
 
-    public int isHigherPriorityThan(Priority another) {
+    public boolean isHigherPriorityThan(Priority another) {
         if (this.duplicated && !another.isDuplicated()) {
-            return -1;
+            return true;
         }
 
-        if (this.api.isHigherThan(another.getApi())) {
-            return -1;
-        }
-
-        return 0;
+        return this.api.isHigherThan(another.getApi());
     }
 
     @Override
