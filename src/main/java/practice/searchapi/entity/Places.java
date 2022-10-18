@@ -32,6 +32,14 @@ public class Places {
         sort();
     }
 
+    public Places(List<Places> places, int mergeSize) {
+        this.places = new ArrayList<>(places.get(0).getPlaces());
+        for (int i = 1; i < mergeSize; i++) {
+            mergePlaces(places.get(i));
+        }
+        sort();
+    }
+
     public Places(NaverSearchResponseDTO dto) {
         this.places = new ArrayList<>();
         for (NaverSearchResponseItemDTO item : dto.getItems()) {
