@@ -46,6 +46,10 @@ public class Place {
         return this.priority.isHigherPriorityThan(another.getPriority());
     }
 
+    public PlaceDTO toDto() {
+        return new PlaceDTO(name.getName(), roadAddress, getLocation().getX(), getLocation().getY());
+    }
+
     public Name getName() {
         return name;
     }
@@ -83,9 +87,5 @@ public class Place {
     @Override
     public int hashCode() {
         return Objects.hash(name, roadAddress, location);
-    }
-
-    public PlaceDTO toDto() {
-        return new PlaceDTO(name.getName(), roadAddress, getLocation().getX(), getLocation().getY());
     }
 }

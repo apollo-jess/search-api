@@ -4,17 +4,20 @@ import java.util.Objects;
 
 public class Name {
 
-    private String name;
+    private final String name;
+
+    private final String nameForCompare;
 
     public Name(String name) {
-        this.name = validate(name);
+        this.name = name;
+        this.nameForCompare = trimmed(name);
     }
 
     public Name(Name name) {
         this(name.getName());
     }
 
-    private String validate(String name) {
+    private String trimmed(String name) {
         return name
                 .replaceAll("[\\s+]", "")
                 .replaceAll("[<b|(/b)>]", "");
@@ -22,6 +25,10 @@ public class Name {
 
     public String getName() {
         return name;
+    }
+
+    public String getNameForCompare() {
+        return this.nameForCompare;
     }
 
     @Override
