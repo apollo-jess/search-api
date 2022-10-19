@@ -1,21 +1,36 @@
 package practice.searchapi.entity;
 
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
+@NoArgsConstructor
 public class Keyword {
 
-    private final String keyword;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "keyword_id")
+    private Long id;
 
+    @Column(name = "name", unique = true)
+    private String name;
+
+    @Column(name = "count")
     private Long count = 0L;
 
-    public Keyword(String keyword) {
-        this.keyword = keyword;
+    public Keyword(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Keyword{" +
-                "keyword='" + keyword + '\'' +
+                "keyword='" + name + '\'' +
                 ", count=" + count +
                 '}';
     }
@@ -25,12 +40,12 @@ public class Keyword {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Keyword keyword1 = (Keyword) o;
-        return Objects.equals(keyword, keyword1.keyword) && Objects.equals(count, keyword1.count);
+        return Objects.equals(name, keyword1.name) && Objects.equals(count, keyword1.count);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(keyword, count);
+        return Objects.hash(name, count);
     }
 
     public void counted() {
