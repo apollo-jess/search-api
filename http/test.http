@@ -1,3 +1,7 @@
 
-## get Test
+### 1) 장소 검색
 GET http://localhost:8080/v1/places?query=카카오프렌즈
+
+
+### 2) 검색 키워드 목록
+GET http://localhost:8080/v1/keywords/top10
