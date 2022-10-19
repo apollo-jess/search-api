@@ -7,7 +7,7 @@ import practice.searchapi.entity.repository.KeywordRepository;
 
 @Service
 @RequiredArgsConstructor
-public class KeywordService {
+public class KeywordCommandService {
 
     private final KeywordRepository keywordRepository;
 
