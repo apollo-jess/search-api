@@ -38,8 +38,8 @@ public class Place {
         this(item.getTitle(), item.getRoadAddress(), String.valueOf(item.getMapx()), String.valueOf(item.getMapy()), API.NAVER);
     }
 
-    public boolean isEqual(Place target) {
-        return this.name.equals(target.getName());
+    public boolean isEqualName(Place target) {
+        return this.name.isEqual(target.getName());
     }
 
     public boolean isHigherPriorityPlaceThan(Place another) {

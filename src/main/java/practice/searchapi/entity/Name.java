@@ -23,6 +23,10 @@ public class Name {
                 .replaceAll("[<b|(/b)>]", "");
     }
 
+    public boolean isEqual(Name name_space) {
+        return this.nameForCompare.equals(name_space.getNameForCompare());
+    }
+
     public String getName() {
         return name;
     }
@@ -36,11 +40,11 @@ public class Name {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Name name1 = (Name) o;
-        return Objects.equals(name, name1.name);
+        return Objects.equals(nameForCompare, name1.nameForCompare);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(nameForCompare);
     }
 }

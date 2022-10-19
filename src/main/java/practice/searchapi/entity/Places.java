@@ -72,7 +72,7 @@ public class Places {
 
     private boolean isDuplicated(Place place) {
         return this.places.stream()
-                .anyMatch(p -> p.isEqual(place));
+                .anyMatch(p -> p.isEqualName(place));
     }
 
     private void changeDuplicatedPlace(Place place) {
@@ -91,7 +91,7 @@ public class Places {
 
     private int getDuplicatedPlaceIndexWith(Place target) {
         for (int i = 0; i < this.places.size(); i++) {
-            if (this.places.get(i).isEqual(target)) {
+            if (this.places.get(i).isEqualName(target)) {
                 return i;
             }
         }
