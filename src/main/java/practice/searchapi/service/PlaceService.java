@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlaceService {
 
-    private final KeywordService keywordService;
+    private final KeywordCommandService keywordCommandService;
 
     private final List<SearchAPI> searchAPIs = Arrays.asList(new KakaoAPI(), new NaverAPI());
 
@@ -25,7 +25,7 @@ public class PlaceService {
         for (SearchAPI searchAPI : searchAPIs) {
             searchedPlaces.add(searchAPI.searchPlaces(query));
         }
-        keywordService.countKeyword(query);
+        keywordCommandService.countKeyword(query);
 
         Places places = new Places(searchedPlaces, 2);
         return places.toResponseDto();
