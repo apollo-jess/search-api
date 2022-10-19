@@ -1,17 +1,19 @@
 package practice.searchapi.entity;
 
 import lombok.NoArgsConstructor;
+import practice.searchapi.service.dto.KeywordDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Objects;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "keyword")
 @NoArgsConstructor
-public class Keyword {
+public class Keyword extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "keyword_id")
@@ -35,24 +37,15 @@ public class Keyword {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Keyword keyword1 = (Keyword) o;
-        return Objects.equals(name, keyword1.name) && Objects.equals(count, keyword1.count);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, count);
-    }
-
     public void counted() {
         this.count++;
     }
 
     public Long getCount() {
         return count;
+    }
+
+    public KeywordDTO toDTO() {
+        return new KeywordDTO(this.name, this.count);
     }
 }
