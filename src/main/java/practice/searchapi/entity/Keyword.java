@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "keyword")
@@ -47,5 +48,18 @@ public class Keyword extends BaseTimeEntity {
 
     public KeywordDTO toDTO() {
         return new KeywordDTO(this.name, this.count);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Keyword keyword = (Keyword) o;
+        return Objects.equals(id, keyword.id) && Objects.equals(name, keyword.name) && Objects.equals(count, keyword.count);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, count);
     }
 }
