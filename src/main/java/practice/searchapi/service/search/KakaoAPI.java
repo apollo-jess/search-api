@@ -10,14 +10,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.IOException;
-
 public class KakaoAPI implements SearchAPI {
 
     private static final int SEARCH_LIMIT_COUNT = 5;
 
-    @Override
-    public Places searchPlaces(String query) {
+    private static KakaoSearchAPI createKakaoSearchAPI() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://dapi.kakao.com")
@@ -25,7 +22,12 @@ public class KakaoAPI implements SearchAPI {
                 .client(httpClient.build())
                 .build();
 
-        KakaoSearchAPI kakaoSearchAPI = retrofit.create(KakaoSearchAPI.class);
+        return retrofit.create(KakaoSearchAPI.class);
+    }
+
+    @Override
+    public Places searchPlaces(String query) {
+        KakaoSearchAPI kakaoSearchAPI = createKakaoSearchAPI();
         Call<KakaoSearchResponseDTO> callSync = kakaoSearchAPI.getPlaces(query, SEARCH_LIMIT_COUNT);
 
         try {

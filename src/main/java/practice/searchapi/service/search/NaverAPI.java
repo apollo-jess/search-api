@@ -9,14 +9,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.IOException;
 
 public class NaverAPI implements SearchAPI {
 
     private static final int SEARCH_LIMIT_COUNT = 5;
 
-    @Override
-    public Places searchPlaces(String query) {
+    private static NaverSearchAPI createNaverSearchAPI() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://openapi.naver.com")
@@ -24,7 +22,12 @@ public class NaverAPI implements SearchAPI {
                 .client(httpClient.build())
                 .build();
 
-        NaverSearchAPI naverSearchAPI = retrofit.create(NaverSearchAPI.class);
+        return retrofit.create(NaverSearchAPI.class);
+    }
+
+    @Override
+    public Places searchPlaces(String query) {
+        NaverSearchAPI naverSearchAPI = createNaverSearchAPI();
         Call<NaverSearchResponseDTO> callSync = naverSearchAPI.getPlaces(query, SEARCH_LIMIT_COUNT);
 
         try {
