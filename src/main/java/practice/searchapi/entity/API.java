@@ -17,6 +17,10 @@ public enum API {
         return this.getOrder() < api.getOrder();
     }
 
+    public String getType() {
+        return type;
+    }
+
     public int getOrder() {
         return order;
     }

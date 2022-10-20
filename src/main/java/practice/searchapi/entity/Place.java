@@ -47,7 +47,7 @@ public class Place {
     }
 
     public PlaceDTO toDto() {
-        return new PlaceDTO(name.getName(), roadAddress, getLocation().getX(), getLocation().getY());
+        return new PlaceDTO(name.getName(), roadAddress, getLocation().getX(), getLocation().getY(), priority.getApi());
     }
 
     public Name getName() {
