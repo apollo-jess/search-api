@@ -12,6 +12,7 @@ public class KeywordCommandService {
     private final KeywordRepository keywordRepository;
 
     public void countKeyword(String query) {
+        // test 커밋
         Keyword keyword = keywordRepository.findByName(query)
                                            .orElse(new Keyword(query));
         keyword.counted();
